@@ -18,11 +18,11 @@ public class SieveOfEratosthenes {
         System.out.println("用时：" + (time2 - time1) + "ms");
         System.out.println("质数个数：" + count);
         for (int i = 0; i < n; i++) {
-            if (array[i] == true) {
+            if (array[i]) {
                 System.out.print(i + ",");
             }
         }
-
+        System.out.println();
     }
 
     private static int sieve(int n) {
