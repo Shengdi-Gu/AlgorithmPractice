@@ -1,4 +1,6 @@
+import java.util.Arrays;
 import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by gsd on 17-6-26.
@@ -59,11 +61,70 @@ public class NumberAndChineseUtils {
         }
     }
 
-    public static int chineseToNumber(String chnNumber) {
+    private static boolean secUnit = false;
 
-        return 0;
+    public static int chineseToNumber(String chnNumber) {
+        int rtn = 0;
+        int section = 0;
+        int number = 0;
+        secUnit = false;
+        int pos = 0;
+        while (pos < chnNumber.length()) {
+            int num = chineseToValue(chnNumber.substring(pos, pos + 1));
+            if (num > 0) {
+                number = num;
+                pos++;
+                if (pos >= chnNumber.length()) {
+                    section += number;
+                    rtn += section;
+                    break;
+                }
+            } else {
+                int unit = chineseToUnit(chnNumber.substring(pos, pos + 1));
+                if (secUnit) {
+                    section = (section + number) * unit;
+                    rtn += section;
+                    section = 0;
+                } else {
+                    section += (number * unit);
+                }
+                number = 0;
+                pos++;
+                if (pos >= chnNumber.length()) {
+                    rtn += section;
+                    break;
+                }
+            }
+
+        }
+        return rtn;
     }
-    private static final ChnValuePair[] CHN_VALUE_PAIRS={};
+
+    private static int chineseToValue(String substring) {
+        List<String> list = Arrays.asList(CHINESE_NUM_CHAR);
+        if (list.contains(substring)) {
+            return list.indexOf(substring);
+        }
+        return -1;
+    }
+
+    private static int chineseToUnit(String substring) {
+        for (ChnValuePair pair : CHN_VALUE_PAIRS) {
+            if (pair.getName().equals(substring)) {
+                secUnit = pair.isSecUnit();
+                return pair.getValue();
+            }
+        }
+
+        return -1;
+    }
+
+    private static final ChnValuePair[] CHN_VALUE_PAIRS = {
+            new ChnValuePair("十", 10, false),
+            new ChnValuePair("百", 100, false),
+            new ChnValuePair("千", 1000, false),
+            new ChnValuePair("万", 10000, true),
+            new ChnValuePair("亿", 100000000, true)};
 
     private static class ChnValuePair {
         final String name;
