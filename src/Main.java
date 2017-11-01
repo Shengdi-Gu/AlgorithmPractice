@@ -8,7 +8,10 @@ public class Main {
         //System.out.println(NumberAndChineseUtils.NumberToChinese(1223456));
         //中文转阿拉伯数字
         //System.out.println(NumberAndChineseUtils.chineseToNumber("一百二十二万三千四百五十六"));
-        int[] array = {100, 4, 200, 1, 3, 2, 5};
-        System.out.println(LongestConsecutive.longestConsecutive(array));
+//        int[] array = {100, 4, 200, 1, 3, 2, 5};
+//        System.out.println(LongestConsecutive.longestConsecutive(array));
+        int[] array={1,2,2,3,1,4,2};
+        System.out.println(FindShortestSubArray.findShortestSubArray(array));
+
     }
 }
