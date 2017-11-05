@@ -13,9 +13,11 @@ public class Main {
 //        System.out.println(LongestConsecutive.longestConsecutive(array));
 //        int[] array={1,2,2,3,1,4,2};
 //        System.out.println(FindShortestSubArray.findShortestSubArray(array));
-        int[] array={1,2,3};
-        int k=6;
-        System.out.println(SubarraySum.subarraySum(array,k));
+//        int[] array={1,2,3};
+//        int k=6;
+//        System.out.println(SubarraySum.subarraySum(array,k));
+        String s="pwwkewfsafsafgaegge";
+        System.out.println(LengthOfLongestSubstring.lengthOfLongestSubstring(s));
 
     }
 }
