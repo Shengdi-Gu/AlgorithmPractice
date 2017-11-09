@@ -1,4 +1,4 @@
-# AlgorithmTest
+# AlgorithmPractice
 ## 练习一些算法
 ### 2017-6-26 埃氏筛法（SieveOfEratosthenes）
 #### 算法原理
