@@ -16,8 +16,10 @@ public class Main {
 //        int[] array={1,2,3};
 //        int k=6;
 //        System.out.println(SubarraySum.subarraySum(array,k));
-        String s="pwwkewfsafsafgaegge";
-        System.out.println(LengthOfLongestSubstring.lengthOfLongestSubstring(s));
+//        String s="pwwkewfsafsafgaegge";
+//        System.out.println(LengthOfLongestSubstring.lengthOfLongestSubstring(s));
+        int[] array={3,1,4,4,4,2,2,3,2,2,2,2};
+        System.out.println(MaxFrequencyElement.maxFrequencyElement(array));
 
     }
 }
