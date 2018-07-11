@@ -1,6 +1,4 @@
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.HashSet;
+import java.util.*;
 
 /**
  * Created by 46184 on 2017/11/23.
@@ -327,7 +325,7 @@ public class LeetCode {
                 }
                 if (map.size() == 1 && map.containsKey(sChars[i]) && map.get(sChars[i]) != i) {
                     map.put(sChars[i], i);
-                    start=i;
+                    start = i;
                     minStart = i;
                 }
                 if (map.size() <= tSet.size()) {
@@ -364,5 +362,35 @@ public class LeetCode {
         int temp = array[i];
         array[i] = array[j];
         array[j] = temp;
+    }
+
+//    public int threeSumClosest(int[] nums, int target) {
+//
+//        return 0;
+//    }
+
+    /**
+     * 22. Generate Parentheses
+     * 给定n，有n个左括号和n个又括号，输出他们所有可能的正确的排列方式
+     * @param n
+     * @return
+     */
+    public List<String> generateParenthesis(int n) {
+        ArrayList<String> list = new ArrayList<>();
+        backtrack(list, "", 0, 0, n);
+        return list;
+    }
+
+    private void backtrack(List<String> list, String str, int open, int close, int max) {
+        if (str.length() == max * 2) {
+            list.add(str);
+            return;
+        }
+        if (open < max) {
+            backtrack(list, str + "(", open+1, close, max);
+        }
+        if (close < open) {
+            backtrack(list, str + ")", open, close+1, max);
+        }
     }
 }
