@@ -1,3 +1,4 @@
+import java.util.Arrays;
 
 public class Main {
 
@@ -20,11 +21,10 @@ public class Main {
 //        System.out.println(LengthOfLongestSubstring.lengthOfLongestSubstring(s));
 //        int[] array={3,1,4,4,4,2,2,3,2,2,2,2};
 //        System.out.println(MaxFrequencyElement.maxFrequencyElement(array));
-        LeetCode leetCode = new LeetCode();
-//        int[] array={0,0};
-//        System.out.println(leetCode.minSubArrayLen(7,array));
-        String s = "bba";
-        String t = "ab";
-        System.out.println(leetCode.minWindow(s, t));
+//        LeetCode leetCode = new LeetCode();
+////        int[] array={0,0};
+////        System.out.println(leetCode.minSubArrayLen(7,array));
+//        System.out.println(Arrays.toString(leetCode.generateParenthesis(3).toArray()));
+        System.out.println(LeetCode.isValid("()[]{}"));
     }
 }

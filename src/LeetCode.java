@@ -372,6 +372,7 @@ public class LeetCode {
     /**
      * 22. Generate Parentheses
      * 给定n，有n个左括号和n个又括号，输出他们所有可能的正确的排列方式
+     *
      * @param n
      * @return
      */
@@ -387,10 +388,40 @@ public class LeetCode {
             return;
         }
         if (open < max) {
-            backtrack(list, str + "(", open+1, close, max);
+            backtrack(list, str + "(", open + 1, close, max);
         }
         if (close < open) {
-            backtrack(list, str + ")", open, close+1, max);
+            backtrack(list, str + ")", open, close + 1, max);
         }
+    }
+
+    /**
+     * 20. Valid Parentheses
+     *
+     * @param s
+     * @return
+     */
+    public static boolean isValid(String s) {
+        Stack<Character> stack = new Stack<>();
+        for (char c : s.toCharArray()) {
+            if (c == '(' || c == '[' || c == '{') {
+                stack.push(c);
+            } else {
+                if (c == ')') {
+                    if (stack.isEmpty() || !stack.pop().equals('(')) {
+                        return false;
+                    }
+                } else if (c == ']') {
+                    if (stack.isEmpty() || !stack.pop().equals('[')) {
+                        return false;
+                    }
+                } else if (c == '}') {
+                    if (stack.isEmpty() || !stack.pop().equals('{')) {
+                        return false;
+                    }
+                }
+            }
+        }
+        return stack.isEmpty();
     }
 }
