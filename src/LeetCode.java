@@ -424,4 +424,68 @@ public class LeetCode {
         }
         return stack.isEmpty();
     }
+
+
+    /**
+     * 24. Swap Nodes in Pairs
+     * @param head
+     * @return
+     */
+    public static ListNode swapPairs(ListNode head) {
+        ListNode node = head;
+        ListNode lastNode = null;
+        ListNode preNode = null;
+        ListNode mh = head;
+        while (node != null && node.next != null) {
+            if (preNode == null) {
+                mh = node.next;
+            }
+            //last指向第二个节点
+            lastNode = node.next;
+            //交换两个节点
+            node.next = lastNode.next;
+            lastNode.next = node;
+            //将前链重新连接到前一个节点
+            if (preNode != null) {
+                preNode.next = lastNode;
+            }
+            //前节点指向第二个节点，为下次循环准备
+            preNode = node;
+            //指向下一次循环的起点
+            node = node.next;
+        }
+        return mh;
+    }
+
+    /**
+     * 用于组装链表
+     * @param arr
+     * @return
+     */
+    public static ListNode linkPairs(int[] arr){
+        ListNode pre=null;
+        ListNode head=null;
+
+        for(int i:arr){
+            ListNode node = new ListNode(i);
+            if(pre!=null){
+                pre.next=node;
+                pre=node;
+            }else {
+                pre=node;
+                head=node;
+            }
+        }
+        return head;
+    }
+
+    public static class ListNode {
+        int val;
+        ListNode next;
+        public ListNode(int val) {
+            this.val = val;
+        }
+    }
+
+
 }

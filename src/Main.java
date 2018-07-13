@@ -25,6 +25,11 @@ public class Main {
 ////        int[] array={0,0};
 ////        System.out.println(leetCode.minSubArrayLen(7,array));
 //        System.out.println(Arrays.toString(leetCode.generateParenthesis(3).toArray()));
-        System.out.println(LeetCode.isValid("()[]{}"));
+//        System.out.println(LeetCode.isValid("()[]{}"));
+
+
+
+        //LeetCode.swapPairs(linkPairs(new int[]{2,5,3,4,6,2,2}));
     }
+
 }
