@@ -493,6 +493,7 @@ public class LeetCode {
     /**
      * 4. Median of Two Sorted Arrays
      * 两个有序数列计算中位数，偶数位则计算平均值
+     *
      * @param nums1
      * @param nums2
      * @return
@@ -520,6 +521,84 @@ public class LeetCode {
             }
         }
         return 0.0;
+    }
+
+    /**
+     * 5. Longest Palindromic Substring
+     * 找出最长的回文字符串
+     *
+     * @param s
+     * @return
+     */
+    public static String longestPalindrome(String s) {
+        if (s.length() < 2) {
+            return s;
+        }
+        char[] chars = s.toCharArray();
+        int[] result = new int[]{0, 0};
+        for (int i = 1; i < chars.length; i++) {
+            if (chars[i] == chars[i - 1]) {
+                int[] r = palindromeIndex(chars, i, false);
+                if (r[1] - r[0] > result[1] - result[0]) {
+                    result = r;
+                }
+            }
+            if (i + 1 < chars.length && chars[i - 1] == chars[i + 1]) {
+                int[] r = palindromeIndex(chars, i, true);
+                if (r[1] - r[0] > result[1] - result[0]) {
+                    result = r;
+                }
+            }
+
+        }
+        return s.substring(result[0], result[1] + 1);
+    }
+
+    private static int[] palindromeIndex(char[] chars, int index, boolean isCenter) {
+        int left = index - 1;
+        int right = isCenter ? index + 1 : index;
+        while (left > 0 && right < chars.length - 1 && chars[left - 1] == chars[right + 1]) {
+            left--;
+            right++;
+        }
+        return new int[]{left, right};
+    }
+
+    /**
+     * 6. ZigZag Conversion
+     * @param s
+     * @param numRows
+     * @return
+     */
+    public static String convert(String s, int numRows) {
+        if (s.length() == 0 || numRows == 1 || s.length() < numRows) {
+            return s;
+        }
+        char[] chars = s.toCharArray();
+        StringBuffer[] sbs = new StringBuffer[numRows];
+        for (int i = 0; i < chars.length; i++) {
+            int row = getRow(i, numRows);
+            if (sbs[row] == null) {
+                sbs[row] = new StringBuffer();
+            }
+            sbs[row].append(s.charAt(i));
+        }
+        for (int i = 1; i < sbs.length; i++) {
+            sbs[0].append(sbs[i]);
+        }
+        return sbs[0].toString();
+    }
+
+    private static int getRow(int index, int rows) {
+        int cycLength = 2 * rows - 2;
+        int r = index % cycLength;
+        int result;
+        if (r < rows) {
+            result = r;
+        } else {
+            result = cycLength - r;
+        }
+        return result;
     }
 
 
