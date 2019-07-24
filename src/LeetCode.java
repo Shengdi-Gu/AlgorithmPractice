@@ -428,6 +428,7 @@ public class LeetCode {
 
     /**
      * 24. Swap Nodes in Pairs
+     *
      * @param head
      * @return
      */
@@ -459,21 +460,22 @@ public class LeetCode {
 
     /**
      * 用于组装链表
+     *
      * @param arr
      * @return
      */
-    public static ListNode linkPairs(int[] arr){
-        ListNode pre=null;
-        ListNode head=null;
+    public static ListNode linkPairs(int[] arr) {
+        ListNode pre = null;
+        ListNode head = null;
 
-        for(int i:arr){
+        for (int i : arr) {
             ListNode node = new ListNode(i);
-            if(pre!=null){
-                pre.next=node;
-                pre=node;
-            }else {
-                pre=node;
-                head=node;
+            if (pre != null) {
+                pre.next = node;
+                pre = node;
+            } else {
+                pre = node;
+                head = node;
             }
         }
         return head;
@@ -482,9 +484,42 @@ public class LeetCode {
     public static class ListNode {
         int val;
         ListNode next;
+
         public ListNode(int val) {
             this.val = val;
         }
+    }
+
+    /**
+     * 4. Median of Two Sorted Arrays
+     * 两个有序数列计算中位数，偶数位则计算平均值
+     * @param nums1
+     * @param nums2
+     * @return
+     */
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int length1 = nums1.length;
+        int length2 = nums2.length;
+        int[] num = new int[length1 + length2];
+        int index1 = 0;
+        int index2 = 0;
+        boolean isEven = num.length % 2 == 0;
+
+        for (int i = 0; i < length1 + length2; i++) {
+            if ((index1 >= length1 ? Integer.MAX_VALUE : nums1[index1]) < (index2 >= length2 ? Integer.MAX_VALUE : nums2[index2])) {
+                num[i] = nums1[index1++];
+            } else {
+                num[i] = nums2[index2++];
+            }
+            if (i == num.length / 2) {
+                if (isEven) {
+                    return (num[i] + num[i - 1]) / 2.0;
+                } else {
+                    return num[i];
+                }
+            }
+        }
+        return 0.0;
     }
 
 
