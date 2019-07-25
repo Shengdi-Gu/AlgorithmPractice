@@ -1,3 +1,4 @@
+import java.math.BigInteger;
 import java.util.*;
 
 /**
@@ -566,6 +567,7 @@ public class LeetCode {
 
     /**
      * 6. ZigZag Conversion
+     *
      * @param s
      * @param numRows
      * @return
@@ -601,5 +603,78 @@ public class LeetCode {
         return result;
     }
 
+    /**
+     * 7. Reverse Integer
+     * @param x
+     * @return
+     */
+    public static int reverse(int x) {
+        long x2 = (long) x;
+        long x1 = x2 < 0 ? -x2 : x2;
+        long result = 0;
+        while (x1 != 0) {
+            result = result * 10 + x1 % 10;
+            x1 = x1 / 10;
+        }
+        if (result >= Integer.MAX_VALUE) return 0;
+        return (int) (x < 0 ? -result : result);
+    }
 
+    /**
+     * 8. String to Integer (atoi)
+     * @param str
+     * @return
+     */
+    public static int myAtoi(String str) {
+        str = str.trim();
+        if (str.length() == 0 || (str.charAt(0) != '-' && str.charAt(0) != '+' && (str.charAt(0) < '0' || str.charAt(0) > '9'))) {
+            return 0;
+        }
+        List<Character> list = new ArrayList<>();
+        for (int i = 0; i < str.length(); i++) {
+            if (i == 0) {
+                if (str.charAt(0) == '-' || str.charAt(0) == '+' || (str.charAt(0) >= '0' && str.charAt(0) <= '9')) {
+                    list.add(str.charAt(0));
+                } else {
+                    return 0;
+                }
+            } else if (str.charAt(i) >= '0' && str.charAt(i) <= '9') {
+                list.add(str.charAt(i));
+            } else {
+                break;
+            }
+        }
+
+        Iterator<Character> iterator = list.iterator();
+        if (list.get(0) == '-' || list.get(0) == '+') {
+            iterator.next();
+        }
+        while (iterator.hasNext()) {
+            Character c = iterator.next();
+            if (c == '0')
+                iterator.remove();
+            else
+                break;
+        }
+        if (list.size() == 0) return 0;
+
+        if (list.size() == 1 && (list.get(0) < '0' || list.get(0) > '9')) {
+            return 0;
+        }
+        int flag = (list.get(0) == '-') ? -1 : 1;
+
+        StringBuffer stringBuffer = new StringBuffer();
+        list.forEach(character -> {
+            if (character >= '0' && character <= '9') {
+                stringBuffer.append(character);
+            }
+        });
+        String resultString = stringBuffer.toString();
+
+
+        if (resultString.length() > (Integer.MAX_VALUE + "").length() || (resultString.length() == (Integer.MAX_VALUE + "").length() && resultString.compareTo(Integer.MAX_VALUE + "") > 0)) {
+            return flag == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+        }
+        return flag * Integer.valueOf(resultString);
+    }
 }
