@@ -605,6 +605,7 @@ public class LeetCode {
 
     /**
      * 7. Reverse Integer
+     *
      * @param x
      * @return
      */
@@ -622,6 +623,7 @@ public class LeetCode {
 
     /**
      * 8. String to Integer (atoi)
+     *
      * @param str
      * @return
      */
@@ -676,5 +678,20 @@ public class LeetCode {
             return flag == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
         }
         return flag * Integer.valueOf(resultString);
+    }
+
+    /**
+     * 9. Palindrome Number
+     * @param x
+     * @return
+     */
+    public static boolean isPalindrome(int x) {
+        String s = x + "";
+        for (int i = 0; i < s.length() / 2; i++) {
+            if (s.charAt(i) != s.charAt(s.length() - i - 1)) {
+                return false;
+            }
+        }
+        return true;
     }
 }
