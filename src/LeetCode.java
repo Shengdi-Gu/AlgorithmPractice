@@ -135,20 +135,22 @@ public class LeetCode {
      * @return
      */
     public int maxArea(int[] height) {
-        int left = 0, right = height.length - 1;
-        int mostWater = 0;
-        while (left < right) {
-            int water = (height[left] < height[right] ? height[left] : height[right]) * (right - left);
-            if (water > mostWater) {
-                mostWater = water;
-            }
-            if (height[left] > height[right]) {
-                right--;
+        if (height == null || height.length == 0 || height.length == 1) {
+            return 0;
+        }
+        int leftIndex = 0;
+        int rightIndex = height.length - 1;
+        int result = 0;
+        while (leftIndex < rightIndex) {
+            if (height[leftIndex] < height[rightIndex]) {
+                result = Math.max(result, (rightIndex - leftIndex) * height[leftIndex]);
+                leftIndex++;
             } else {
-                left++;
+                result = Math.max(result, (rightIndex - leftIndex) * height[rightIndex]);
+                rightIndex--;
             }
         }
-        return mostWater;
+        return result;
     }
 
     /**
@@ -343,8 +345,8 @@ public class LeetCode {
                     map.put(sChars[i], i);
                     if (sChars[start] == sChars[i]) {
                         end = i;
-                        while (start + 1 < sChars.length && (!tSet.contains(sChars[++start]) || !(map.get(sChars[start]) != null && map.get(sChars[start]) == start)))
-                            ;
+                        while (start + 1 < sChars.length && (!tSet.contains(sChars[++start])
+                                || !(map.get(sChars[start]) != null && map.get(sChars[start]) == start))) ;
                         if (end >= start && length > end - start + 1) {
                             length = end - start + 1;
                             minStart = start;
@@ -682,6 +684,7 @@ public class LeetCode {
 
     /**
      * 9. Palindrome Number
+     *
      * @param x
      * @return
      */
@@ -693,5 +696,235 @@ public class LeetCode {
             }
         }
         return true;
+    }
+
+    /**
+     * 12. Integer to Roman
+     *
+     * @param num
+     * @return
+     */
+    public static String intToRoman(int num) {
+        StringBuffer stringBuffer = new StringBuffer();
+        while (num > 0) {
+            int maxCloseNumer = getMaxCloseNumber(num);
+            stringBuffer.append(getRomanNumber(maxCloseNumer));
+            num -= maxCloseNumer;
+        }
+        return stringBuffer.toString();
+    }
+
+    private static String getRomanNumber(int num) {
+        switch (num) {
+            case 1:
+                return "I";
+            case 4:
+                return "IV";
+            case 5:
+                return "V";
+            case 9:
+                return "IX";
+            case 10:
+                return "X";
+            case 40:
+                return "XL";
+            case 50:
+                return "L";
+            case 90:
+                return "XC";
+            case 100:
+                return "C";
+            case 400:
+                return "CD";
+            case 500:
+                return "D";
+            case 900:
+                return "CM";
+            case 1000:
+                return "M";
+            default:
+                return "";
+        }
+    }
+
+    private static int getMaxCloseNumber(int num) {
+        if (num >= 1000) {
+            return 1000;
+        } else if (num >= 900) {
+            return 900;
+        } else if (num >= 500) {
+            return 500;
+        } else if (num >= 400) {
+            return 400;
+        } else if (num >= 100) {
+            return 100;
+        } else if (num >= 90) {
+            return 90;
+        } else if (num >= 50) {
+            return 50;
+        } else if (num >= 40) {
+            return 40;
+        } else if (num >= 10) {
+            return 10;
+        } else if (num >= 9) {
+            return 9;
+        } else if (num >= 5) {
+            return 5;
+        } else if (num >= 4) {
+            return 4;
+        } else if (num >= 1) {
+            return 1;
+        }
+        return 0;
+    }
+
+    /**
+     * 13. Roman to Integer
+     *
+     * @param s
+     * @return
+     */
+    public static int romanToInt(String s) {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("I", 1);
+        map.put("V", 5);
+        map.put("X", 10);
+        map.put("L", 50);
+        map.put("C", 100);
+        map.put("D", 500);
+        map.put("M", 1000);
+
+        map.put("IX", 9);
+        map.put("IV", 4);
+        map.put("XL", 40);
+        map.put("XC", 90);
+        map.put("CD", 400);
+        map.put("CM", 900);
+
+        int result = 0;
+        while (s.length() > 0) {
+
+            if (s.charAt(0) == 'I' || s.charAt(0) == 'X' || s.charAt(0) == 'C') {
+                if (s.length() >= 2 && map.get(s.substring(0, 2)) != null) {
+                    result += map.get(s.substring(0, 2));
+                    s = s.substring(2);
+                } else {
+                    Integer integer = map.get(s.substring(0, 1));
+                    result += integer;
+                    s = s.substring(1);
+                }
+
+            } else {
+                Integer integer = map.get(s.substring(0, 1));
+                result += integer;
+                s = s.substring(1);
+            }
+        }
+        return result;
+    }
+
+    /**
+     * 14. Longest Common Prefix
+     * @param strs
+     * @return
+     */
+    public static String longestCommonPrefix(String[] strs) {
+        if (strs == null || strs.length == 0) {
+            return "";
+        }
+        if (strs.length == 1) {
+            return strs[0];
+        }
+
+        for (int i = 0; i < strs[0].length(); i++) {
+            char c = 0;
+            for (int k = 0; k < strs.length; k++) {
+                if (k == 0) {
+                    c = strs[0].charAt(i);
+                } else if (strs[k].length() <= i || strs[k].charAt(i) != c) {
+                    return strs[0].substring(0, i);
+                }
+            }
+        }
+        return strs[0];
+    }
+
+    /**
+     * 19. Remove Nth Node From End of List
+     * @param head
+     * @param n
+     * @return
+     */
+    public static ListNode removeNthFromEnd(ListNode head, int n) {
+        List<ListNode> listNodes = new ArrayList<>();
+        while (head != null) {
+            listNodes.add(head);
+            head = head.next;
+        }
+
+        if (n == 0) {
+            return null;
+        } else if (n == listNodes.size()) {
+            return listNodes.size() == 1 ? null : listNodes.get(1);
+        } else {
+            listNodes.get(listNodes.size() - n - 1).next = listNodes.size() > (listNodes.size() - n + 1) ? listNodes.get(listNodes.size() - n + 1) : null;
+        }
+
+        return listNodes.get(0);
+    }
+
+    /**
+     * 17. Letter Combinations of a Phone Number
+     * @param digits
+     * @return
+     */
+    public static List<String> letterCombinations(String digits) {
+        char[][] chars = new char[8][4];
+        chars[0] = new char[]{'a', 'b', 'c'};
+        chars[1] = new char[]{'d', 'e', 'f'};
+        chars[2] = new char[]{'g', 'h', 'i'};
+        chars[3] = new char[]{'j', 'k', 'l'};
+        chars[4] = new char[]{'m', 'n', 'o'};
+        chars[5] = new char[]{'p', 'q', 'r', 's'};
+        chars[6] = new char[]{'t', 'u', 'v'};
+        chars[7] = new char[]{'w', 'x', 'y', 'z'};
+
+        Map<Character, char[]> map = new HashMap<>();
+        map.put('2', chars[0]);
+        map.put('3', chars[1]);
+        map.put('4', chars[2]);
+        map.put('5', chars[3]);
+        map.put('6', chars[4]);
+        map.put('7', chars[5]);
+        map.put('8', chars[6]);
+        map.put('9', chars[7]);
+
+        List<String> list = new ArrayList<>();
+
+        for (int i = 0; i < digits.length(); i++) {
+            addList(map.get(digits.charAt(i)), list);
+        }
+        return list;
+    }
+
+    private static void addList(char[] chars, List<String> list) {
+
+        if (list.size() == 0) {
+            for (int i = 0; i < chars.length; i++) {
+                list.add(chars[i] + "");
+            }
+        } else {
+            int size = list.size();
+            for (int i = 0; i < chars.length; i++) {
+                for (int k = 0; k < size; k++) {
+                    if (i == chars.length - 1) {
+                        list.set(k, list.get(k) + chars[i]);
+                    } else {
+                        list.add(list.get(k) + chars[i]);
+                    }
+                }
+            }
+        }
+
     }
 }
